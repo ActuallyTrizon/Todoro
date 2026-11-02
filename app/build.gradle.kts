@@ -1,4 +1,4 @@
-plugins {
+7plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.com.google.dagger.hilt.android)
     alias(libs.plugins.com.google.devtools.ksp)
@@ -59,11 +59,11 @@ android {
             )
         }
     }
-}
     
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+        isCoreLibraryDesugaringEnabled = true
     }
     
     buildFeatures {

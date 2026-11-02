@@ -1,0 +1,4 @@
+CompileFlags:
+  Add:
+    - "-I/storage/emulated/0/Download/Work/Todoro"
+  CompilationDatabase: "/storage/emulated/0/Download/Work/Todoro"
