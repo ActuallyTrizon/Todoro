@@ -3,18 +3,18 @@ package com.trizon.todoro.data.local
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.trizon.todoro.data.dao.ExampleDao
-import com.trizon.todoro.data.entity.ExampleEntity
+import com.trizon.todoro.data.dao.TodoroDao
+import com.trizon.todoro.data.entity.TodoroEntity
 import com.trizon.todoro.di.ApplicationScope
 import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
 import javax.inject.Provider
 
-@Database(entities = [ExampleEntity::class], version = 1, exportSchema = false)
+@Database(entities = [TodoroEntity::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun getExampleDao(): ExampleDao
+    abstract fun getTodoroDao(): TodoroDao
 
     class Callback @Inject constructor(
         private val database: Provider<AppDatabase>,

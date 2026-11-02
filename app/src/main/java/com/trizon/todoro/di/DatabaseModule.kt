@@ -2,7 +2,7 @@ package com.trizon.todoro.di
 
 import android.app.Application
 import androidx.room.Room
-import com.trizon.todoro.data.dao.ExampleDao
+import com.trizon.todoro.data.dao.TodoroDao
 import com.trizon.todoro.data.local.AppDatabase
 import dagger.Module
 import dagger.Provides
@@ -24,7 +24,7 @@ object DatabaseModule {
     }
 
     @Provides
-    fun provideExampleDao(database: AppDatabase): ExampleDao {
-        return database.getExampleDao()
+    fun provideTodoroDao(database: AppDatabase): TodoroDao {
+        return database.getTodoroDao()
     }
 }
