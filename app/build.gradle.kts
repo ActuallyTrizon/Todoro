@@ -1,10 +1,14 @@
-7plugins {
+plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.com.google.dagger.hilt.android)
     alias(libs.plugins.com.google.devtools.ksp)
     alias(libs.plugins.org.jetbrains.kotlin.plugin.compose)
     alias(libs.plugins.org.jetbrains.kotlin.plugin.serialization)
     id("kotlin-parcelize")
+}
+
+base {
+    archivesName.set("Todoro-1.0.0")
 }
 
 hilt {
@@ -21,8 +25,6 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0.0"
-        
-        setProperty("archivesBaseName", "Todoro-$versionName")
         
         ndk {
             abiFilters.addAll(setOf("armeabi-v7a", "arm64-v8a"))
