@@ -22,17 +22,10 @@ android {
         versionCode = 1
         versionName = "1.0.0"
         
+        setProperty("archivesBaseName", "Todoro-$versionName")
+        
         ndk {
             abiFilters.addAll(setOf("armeabi-v7a", "arm64-v8a"))
-        }
-    }
-    
-    androidComponents {
-        onVariants { variant ->
-            variant.outputs.forEach { output ->
-                val versionName = defaultConfig.versionName ?: "1.0.0"
-                output.outputFileName.set("Todoro-$versionName-${variant.name}.apk")
-            }
         }
     }
 
