@@ -44,34 +44,24 @@ jobs:
           
       - name: Grant Permission
         run: chmod +x gradlew
-
-      - name: Build Unsigned APK
-        run: ./gradlew assembleRelease
-
-      - name: Sign APK
-        uses: ilharp/sign-android-release@v2.0.0
-        id: sign_app
-        with:
-          releaseDir: app/build/outputs/apk/release
-          signingKey: ${{ secrets.KEYSTORE }}
-          keyAlias: ${{ secrets.SIGN_ALIAS }}
-          keyStorePassword: ${{ secrets.STORE_PASS }}
-          keyPassword: ${{ secrets.KEY_PASS }}
-
-      - name: Rename Signed APK
+        
+      - name: Sign Release APK
+        env:
+          KEYSTORE_PATH: ${{ github.workspace }}/keystore.jks
+          STORE_PASS: ${{ secrets.STORE_PASS }}
+          SIGN_ALIAS: ${{ secrets.SIGN_ALIAS }}
+          KEY_PASS: ${{ secrets.KEY_PASS }}
         run: |
-          VERSION_NAME=$(grep -m1 'versionName' app/build.gradle.kts | cut -d'"' -f2)
-          mkdir -p dist
-          SIGNED_FILE="${{ steps.sign_app.outputs.signedFile }}"
-          
-          cp "$SIGNED_FILE" "dist/Todoro-$VERSION_NAME-release.apk"
-          echo "Successfully packaged dist/Todoro-$VERSION_NAME-release.apk"
+          echo "${{ secrets.KEYSTORE_BASE64}}"
 
-      - name: Upload Signed APK
+      - name: Build APK
+        run: ./gradlew assembleRelease
+          
+      - name: Upload Release APK
         uses: actions/upload-artifact@v7
         with:
           name: Release
-          path: dist/*.apk
+          path: app/build/outputs/apk/release/*.apk
 
   trigger-publish:
     name: Trigger Publish Workflow

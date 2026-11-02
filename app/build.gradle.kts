@@ -26,9 +26,32 @@ android {
             abiFilters.addAll(setOf("armeabi-v7a", "arm64-v8a"))
         }
     }
+    
+    androidComponents {
+        onVariants { variant ->
+            variant.outputs.forEach { output ->
+                val versionName = defaultConfig.versionName ?: "1.0.0"
+                output.outputFileName.set("Todoro-$versionName-${variant.name}.apk")
+            }
+        }
+    }
+
+    signingConfigs {
+        create("release") {
+            storeFile = file(System.getenv("KEYSTORE_PATH") ?: "keystore.jks")
+            storePassword = System.getenv("STORE_PASS")
+            keyAlias = System.getenv("SIGN_ALIAS")
+            keyPassword = System.getenv("KEY_PASS")
+        }
+    }
 
     buildTypes {
         debug {
+            isMinifyEnabled = false
+        }
+        release {
+            signingConfig = signingConfigs.getByName("release")
+            
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -36,6 +59,7 @@ android {
             )
         }
     }
+}
     
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
